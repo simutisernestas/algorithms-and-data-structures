@@ -47,11 +47,12 @@ fn linear_search(vector: &Vec<i32>, num: i32) {
 // Sort vector by "Bubble sort"
 fn bubble_sort(vector: &Vec<i32>) {
     let mut vector = vector.clone();
+
     let length = vector.len();
-    let swap = true;
+    let mut swap = true;
 
     while swap {
-        let mut swap_count = 0;
+        swap = false;
 
         for i in 1..length {
             if vector[i - 1] > vector[i] {
@@ -61,12 +62,8 @@ fn bubble_sort(vector: &Vec<i32>) {
 
                 vector[i - 1] = temp;
 
-                swap_count += 1;
+                swap = true;
             }
-        }
-
-        if swap_count == 0 {
-            break;
         }
     }
 
