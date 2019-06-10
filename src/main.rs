@@ -1,11 +1,32 @@
 fn main() {
-    let mut vector: Vec<i32> = vec![102,7,8];
+    let mut vector: Vec<i32> = vec![7, 8, 4, 6, 1, 1];
 
-    selection_sorting(&vector);
-    linear_search(&vector, 5);
-    bubble_sort(&vector);
+    // selection_sorting(&vector);
+    // linear_search(&vector, 5);
+    // bubble_sort(&vector);
+    // println!("vec: {:?}", merge_sort(&vector));
+    println!("{:?}", binary_search(&mut vector, 4));
+}
 
-    println!("vec: {:?}", merge_sort(&vector));
+fn binary_search(vector: &mut Vec<i32>, num: i32) -> bool {
+    vector.sort();
+    
+    let middle = vector.len()/2;
+
+    if num == vector[middle] {
+        // println!("Position of {:?}: {:?}", num, vector.iter().position(|&r| r == num).unwrap() as i32);
+        return true;
+    }
+
+    if vector.len() as i32 == 1 {
+        return false;
+    }
+
+    if num > vector[middle] {
+        return binary_search(&mut vector[middle..].to_vec(), num);
+    } else {
+        return binary_search(&mut vector[..middle].to_vec(), num);
+    }
 }
 
 // Sort vector by merge method
@@ -16,8 +37,8 @@ pub fn merge_sort(vector: &Vec<i32>) -> Vec<i32> {
         return vector.to_vec();
     }
 
-    let mut left = vector[0..length/2].to_vec();
-    let mut right = vector[length/2..].to_vec();
+    let mut left = vector[0..length / 2].to_vec();
+    let mut right = vector[length / 2..].to_vec();
 
     left = merge_sort(&mut left);
     right = merge_sort(&mut right);
