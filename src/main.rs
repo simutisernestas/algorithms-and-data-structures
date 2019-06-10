@@ -1,12 +1,68 @@
 fn main() {
-    let mut vector: Vec<i32> = vec![1, 2, 33, 2, 4, 1, 3, 5, 9, 11, 7, 99];
+    let mut vector: Vec<i32> = vec![102,7,8];
 
     // selection_sorting(&vector);
     // linear_search(&vector, 5);
-    bubble_sort(&vector);
+    // bubble_sort(&vector);
+    
+    println!("vec: {:?}", merge_sort(&vector));
 }
 
-// Sort vector by selection
+// Sort vector by merge method
+pub fn merge_sort(vector: &Vec<i32>) -> Vec<i32> {
+    let length = vector.len();
+
+    if length == 1 {
+        return vector.to_vec();
+    }
+
+    let mut left = vector[0..length/2].to_vec();
+    let mut right = vector[length/2..].to_vec();
+
+    left = merge_sort(&mut left);
+    right = merge_sort(&mut right);
+
+    return merge(&left, &right);
+}
+
+fn merge(left: &Vec<i32>, right: &Vec<i32>) -> Vec<i32> {
+    let mut merged = vec![0; left.len() + right.len()];
+
+    let mut i = 0;
+    let mut j = 0;
+    let mut index = 0;
+
+    // add until one subarray is deplete
+    while i < left.len() && j < right.len() {
+        if left[i] < right[j] {
+            merged[index] = left[i];
+            index += 1;
+            i += 1;
+        } else {
+            merged[index] = right[j];
+            index += 1;
+            j += 1;
+        }
+    }
+
+    // add every leftover element from the subarray
+    while i < left.len() {
+        merged[index] = left[i];
+        index += 1;
+        i += 1;
+    }
+
+    // add every leftover element from the subarray
+    while j < right.len() {
+        merged[index] = right[j];
+        index += 1;
+        j += 1;
+    }
+
+    return merged;
+}
+
+// Sort vector by selection method
 fn selection_sorting(vector: &Vec<i32>) {
     let mut vector = vector.clone();
 
@@ -20,11 +76,7 @@ fn selection_sorting(vector: &Vec<i32>) {
         }
 
         if vector[i] != vector[smallest_i] {
-            let temporary = vector[i];
-
-            vector[i] = vector[smallest_i];
-
-            vector[smallest_i] = temporary;
+            vector.swap(i, smallest_i);
         }
     }
 
@@ -56,12 +108,7 @@ fn bubble_sort(vector: &Vec<i32>) {
 
         for i in 1..length {
             if vector[i - 1] > vector[i] {
-                let temp = vector[i];
-
-                vector[i] = vector[i - 1];
-
-                vector[i - 1] = temp;
-
+                vector.swap(i, i - 1);
                 swap = true;
             }
         }
