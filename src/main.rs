@@ -1,10 +1,10 @@
 fn main() {
     let mut vector: Vec<i32> = vec![102,7,8];
 
-    // selection_sorting(&vector);
-    // linear_search(&vector, 5);
-    // bubble_sort(&vector);
-    
+    selection_sorting(&vector);
+    linear_search(&vector, 5);
+    bubble_sort(&vector);
+
     println!("vec: {:?}", merge_sort(&vector));
 }
 
